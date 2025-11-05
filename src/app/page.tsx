@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import 'antd/dist/reset.css';
 
 export default function Home() {
   return (

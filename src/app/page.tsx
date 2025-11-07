@@ -1,6 +1,8 @@
 // src/app/page.tsx
 'use client';
 
+import axios from '@/lib/axios';
+import { User } from '@prisma/client';
 import { useState } from 'react';
 import { Form, Input, Button, Typography, message, Card } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
@@ -10,22 +12,20 @@ import 'antd/dist/reset.css';
 
 const { Title } = Typography;
 
+export async function login(email: string, password: string): Promise<User> {
+    return axios.post('/login', { email, password });
+}
+
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const onFinish = async (values: { email: string; password: string }) => {
         setLoading(true);
         try {
-            const res = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(values),
-            });
-            const data = await res.json();
-            console.log('data', data);
-            if (data.user) {
+            const data = await login('test@example.com', '123456');
+            if (data) {
                 message.success('登录成功');
-                // router.push("/welcome");
+                router.push('/welcome');
             } else {
                 message.error('邮箱或密码错误');
             }

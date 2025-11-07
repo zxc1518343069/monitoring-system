@@ -1,11 +1,29 @@
-import { error, success } from '@/lib/apiResponse';
+import { ApiResponse, error, success } from '@/lib/apiResponse';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+// 登录请求类型
+export interface LoginRequest {
+    email: string;
+    password: string;
+}
+
+// 登录响应类型
+export type LoginResponse = ApiResponse<{
+    token: string;
+    user: {
+        id: string;
+        email: string;
+        name: string | null;
+        role: string;
+    };
+}>;
+
 export async function POST(req: Request) {
-    const { email, password } = await req.json();
+    const body: LoginRequest = await req.json();
+    const { email, password } = body;
 
     if (!email || !password) {
         return error(400, '账号密码错误');
@@ -37,9 +55,11 @@ export async function POST(req: Request) {
         path: '/',
     });
 
-    // 模拟登录成功（真实项目应生成 JWT 或 Session）
     return success(
-        { token, user: { id: user.id, email: user.email, name: user.name } },
+        {
+            token,
+            user: { id: user.id, email: user.email, name: user.name, role: user.role },
+        },
         '登录成功'
     );
 }

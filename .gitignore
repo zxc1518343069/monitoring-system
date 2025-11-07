@@ -5,3 +5,4 @@ dist
 .env
 .next
 /src/generated/prisma
+CLAUDE.md

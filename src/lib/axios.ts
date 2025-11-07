@@ -1,6 +1,6 @@
 'use client';
 
-import { ResType } from '@/lib/apiResponse';
+import { ApiResponse } from '@/lib/apiResponse';
 import axios, { AxiosResponse } from 'axios';
 import { message } from 'antd';
 import { requestSuccess } from '@/const/request';
@@ -31,8 +31,7 @@ api.interceptors.request.use(
 
 // 响应拦截器
 api.interceptors.response.use(
-    (response: AxiosResponse<ResType>) => {
-        console.log('response', response);
+    (response: AxiosResponse<ApiResponse>) => {
         const res = response.data;
         if (res.code === requestSuccess) {
             // 成功

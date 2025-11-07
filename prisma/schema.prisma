@@ -17,7 +17,7 @@ model User {
   id        String   @id @default(cuid())       // 用户ID
   email     String   @unique                   // 邮箱（唯一）
   password  String                              // 密码（加密存储）
-  name      String?                             // 用户昵称
+  name      String                             // 用户昵称
   role      String   @default("user")           // 角色（user/admin）
   createdAt DateTime @default(now())            // 注册时间
   updatedAt DateTime @updatedAt                 // 更新时间

@@ -13,22 +13,21 @@ import 'antd/dist/reset.css';
 const { Title } = Typography;
 
 export async function login(email: string, password: string): Promise<User> {
-    return axios.post('/login', { email, password });
+    return axios.post('/user/login', { email, password });
 }
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
     const onFinish = async (values: { email: string; password: string }) => {
         setLoading(true);
+        const { email, password } = values;
+
         try {
-            const data = await login('test@example.com', '123456');
-            if (data) {
-                message.success('登录成功');
-                router.push('/welcome');
-            } else {
-                message.error('邮箱或密码错误');
-            }
+            await login(email, password);
+            message.success('登录成功');
+            router.push('/welcome');
         } catch (error) {
             message.error('登录失败，请稍后再试');
         } finally {

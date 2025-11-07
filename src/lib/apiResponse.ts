@@ -8,10 +8,10 @@ export function success<T>(data?: T, message = '成功') {
     });
 }
 
-export interface ResType {
+export interface ApiResponse<T = any> {
     code: number;
     message: string;
-    data?: any;
+    data?: T;
 }
 
 export function error(code: number, message: string) {

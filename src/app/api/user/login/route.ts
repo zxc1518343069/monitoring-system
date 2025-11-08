@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { ValidationResult } from '@/lib/utils/server';
 
 // 登录请求类型
 export interface LoginRequest {
@@ -25,15 +26,19 @@ export async function POST(req: Request) {
     const body: LoginRequest = await req.json();
     const { email, password } = body;
 
-    if (!email || !password) {
-        return error(400, '账号密码错误');
+    // 校验输入
+    const validation = validateLoginInput(body);
+    if (!validation.valid) {
+        return error(400, validation.message!);
     }
 
+    // 查找用户
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
         return error(400, '用户不存在');
     }
 
+    // 验证密码
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
         return error(400, '密码错误');
@@ -62,4 +67,16 @@ export async function POST(req: Request) {
         },
         '登录成功'
     );
+}
+
+// ==================== 校验函数 ====================
+
+/**
+ * 校验登录输入
+ */
+function validateLoginInput(body: LoginRequest): ValidationResult {
+    if (!body.email || !body.password) {
+        return { valid: false, message: '账号密码不能为空' };
+    }
+    return { valid: true };
 }

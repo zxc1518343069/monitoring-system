@@ -6,6 +6,7 @@ import { Form, Input, Button, Typography, Card, message } from 'antd';
 import { MailOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import styles from './index.module.scss';
 
 const { Title } = Typography;
 
@@ -40,17 +41,9 @@ export default function RegisterPage() {
     };
 
     return (
-        <div
-            style={{
-                minHeight: '100vh',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                background: 'linear-gradient(135deg, #f5f7fa, #c3cfe2)',
-            }}
-        >
-            <Card style={{ width: 350, boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderRadius: 8 }}>
-                <Title level={3} style={{ textAlign: 'center', marginBottom: 24 }}>
+        <div className={styles.container}>
+            <Card className={styles.card}>
+                <Title level={3} className={styles.title}>
                     注册账号
                 </Title>
                 <Form layout="vertical" form={form}>

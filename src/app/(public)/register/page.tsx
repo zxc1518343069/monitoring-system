@@ -6,7 +6,7 @@ import { Form, Input, Button, Typography, Card, message } from 'antd';
 import { MailOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import styles from './index.module.less';
+import styles from './index.module.scss';
 
 const { Title } = Typography;
 

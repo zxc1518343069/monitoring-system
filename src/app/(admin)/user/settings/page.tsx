@@ -8,7 +8,7 @@ import type {
     UpdatePasswordRequest,
     UpdatePasswordResponse,
 } from '@/app/api/user/update/route';
-import styles from './index.module.less';
+import styles from './index.module.scss';
 
 const { Title } = Typography;
 

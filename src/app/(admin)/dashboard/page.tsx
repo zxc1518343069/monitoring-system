@@ -2,7 +2,7 @@
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { Typography } from 'antd';
-import styles from './index.module.less';
+import styles from './index.module.scss';
 
 const { Title } = Typography;
 

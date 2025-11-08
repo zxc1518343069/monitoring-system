@@ -2,7 +2,7 @@
 
 import { Typography, Button, Space, Card } from 'antd';
 import { useRouter } from 'next/navigation';
-import styles from './index.module.less';
+import styles from './index.module.scss';
 
 const { Title, Paragraph } = Typography;
 

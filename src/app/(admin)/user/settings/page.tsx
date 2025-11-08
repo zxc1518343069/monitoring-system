@@ -8,6 +8,7 @@ import type {
     UpdatePasswordRequest,
     UpdatePasswordResponse,
 } from '@/app/api/user/update/route';
+import styles from './index.module.less';
 
 const { Title } = Typography;
 
@@ -41,11 +42,11 @@ export default function UserSettingsPage() {
     };
 
     return (
-        <div style={{ maxWidth: 600 }}>
+        <div className={styles.container}>
             <Title level={3}>用户配置</Title>
 
             {/* 基本信息 */}
-            <Card title="基本信息" style={{ marginBottom: 24 }}>
+            <Card title="基本信息" className={styles.card}>
                 <Form
                     layout="vertical"
                     onFinish={onFinish}

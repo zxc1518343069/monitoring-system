@@ -4,6 +4,7 @@ import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { success, error } from '@/lib/apiResponse';
 import { ApiResponse } from '@/lib/apiResponse';
+import { validateEmail, validatePassword, ValidationResult } from '@/lib/utils/server';
 
 export type RegisterRes = ApiResponse<User>;
 
@@ -11,8 +12,10 @@ export async function POST(req: Request) {
     const body: RegisterPostValues = await req.json();
     const { email, password, name } = body;
 
-    if (!email || !password) {
-        return error(400, '邮箱和密码不能为空');
+    // 校验输入
+    const validation = validateRegisterInput(body);
+    if (!validation.valid) {
+        return error(400, validation.message!);
     }
 
     // 检查是否已存在
@@ -40,4 +43,25 @@ export async function POST(req: Request) {
     });
 
     return success({ user }, '注册成功');
+}
+
+// ==================== 校验函数 ====================
+
+/**
+ * 校验注册输入
+ */
+function validateRegisterInput(body: RegisterPostValues): ValidationResult {
+    // 校验邮箱
+    const emailValidation = validateEmail(body.email);
+    if (!emailValidation.valid) {
+        return emailValidation;
+    }
+
+    // 校验密码
+    const passwordValidation = validatePassword(body.password);
+    if (!passwordValidation.valid) {
+        return passwordValidation;
+    }
+
+    return { valid: true };
 }
